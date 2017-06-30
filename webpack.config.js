@@ -1,13 +1,13 @@
 /**
  * Created by Administrator on 2017/6/1.
  */
-var debug = process.env.NODE_ENV !== "production";
-var webpack = require('webpack');
+let debug = process.env.NODE_ENV !== "production";
+let webpack = require('webpack');
 
 module.exports = {
   context: __dirname,
   devtool: debug ? "inline-sourcemap" : null,
-  entry: "./js/app.js",
+  entry: "./src/js/app.js",
   output: {
     path: __dirname + "/build",
     filename: "app.min.js",
@@ -28,6 +28,10 @@ module.exports = {
           presets: ['react', 'es2015'],
           plugins: ['transform-decorators-legacy'],
         }
+      },
+      {
+        test: /\.css$/,
+        use: [ 'style-loader', 'css-loader' ]
       }
     ]
   },

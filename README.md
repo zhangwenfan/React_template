@@ -1,8 +1,2 @@
-# Ant
-sds
+# This is a react config file
 
-sdssds
-
-s
-
-cvc
