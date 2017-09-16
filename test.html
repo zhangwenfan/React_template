@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+
+</div>
+<div>
+    <table border="1px">
+        <tr>
+            <td>row 1, cell 1</td>
+            <td>row 1, cell 2</td>
+        </tr>
+        <tr>
+            <td>row 2, cell 1</td>
+            <td>row 2, cell 2</td>
+        </tr>
+    </table>
+</div>
+<script>
+  function createXMLHttpRequest() {
+    var xmlHttp;
+    if (window.XMLHttpRequest) {
+      xmlHttp = new XMLHttpRequest();
+      if (xmlHttp.overrideMimeType)
+        xmlHttp.overrideMimeType('text/xml');
+    } else if (window.ActiveXObject) {
+      try {
+        xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+      } catch (e) {
+        try {
+          xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+        } catch (e) {
+        }
+      }
+    }
+    return xmlHttp;
+  }
+
+  xmlHttp = createXMLHttpRequest();
+  var url = "http://localhost:8080/firAjax/gfs";
+  xmlHttp.open("GET", url, true);// 异步处理返回
+  xmlHttp.onreadystatechange = function () {
+    console.log("ok");
+    console.log(xmlHttp.responseText);
+
+    var res = render(xmlHttp.responseText);
+
+    document.getElementById("app").innerHTML = res;
+  };
+  xmlHttp.setRequestHeader("Content-Type",
+    "application/x-www-form-urlencoded;");
+  xmlHttp.send();
+
+  function render(data) {
+    var res = "<table border='1px'>";
+    res += "<tr><td>" + "userId" + "</td><td>" + "userName" + "</td></tr>"
+    var jsonData = JSON.parse(data);
+    for (var i=0; i<jsonData.length; i++) {
+      res += "<tr><td>" + jsonData[i].id + "</td><td>" + jsonData[i].name + "</td></tr>"
+    }
+    res += "</table>";
+    return res;
+    console.log("res =" + jsonData[0].name);
+  }
+
+</script>
+</body>
+
+</html>
